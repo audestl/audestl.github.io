@@ -15,8 +15,18 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+
+<script>
+	$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
+	});
+  </script>
 </head>
 <body>
+  <div class="se-pre-con"></div>
 <header class="site-header">
     <div class="site-branding">
         <h1 class="site-title"><a href="index.html" rel="home"><img src="images/logoAudrey.png" alt="Logo"></a></h1>
