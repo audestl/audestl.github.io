@@ -1,0 +1,28 @@
+canvas{
+background-image: url(black_bg.png);
+/* background-color: yellow; */
+/* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+body{
+  margin: none;
+}
+
+#butt{
+  background-color: black;
+  text-align: center;
+}
+
+button{
+  color: white;
+  background-color: black;
+  /* width: 300px; */
+  border-radius: 10px;
+  /* border-radius: 30px;
+  width: 300px;
+  font-size: 20px;
+  height: 40px; */
+}
