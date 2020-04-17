@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type='text/javascript'
+  src='http://code.jquery.com/jquery-1.6.js'></script>
+<script type='text/javascript'>//<![CDATA[
+$(window).load(function(){
+
+var ctx = $('#cv').get(0).getContext('2d');
+
+
+function fadeOutRectangle(x, y, w, h, r, g, b) {
+    var steps = 50,
+        dr = (255 - r) / steps,
+        dg = (255 - g) / steps,
+        db = (255 - b) / steps,
+        i = 0,
+        interval = setInterval(function() {
+            ctx.fillStyle = 'rgb(' + Math.round(r + dr * i) + ','
+                                   + Math.round(g + dg * i) + ','
+                                   + Math.round(b + db * i) + ')';
+            ctx.fillRect(x, y, w, h);
+            i++;
+            if(i === steps) {
+                clearInterval(interval);
+            }
+        }, 80);
+}
+fadeOutRectangle(10, 10, 100, 100, 123, 213, 50);
+});//]]>
+</script>
+</head>
+<body>
+  <canvas width="400" height="400" id="cv"></canvas>
+</body>
+</html>

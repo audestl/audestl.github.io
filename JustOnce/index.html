@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Just Once</title>
+     <link rel="stylesheet" type="text/css" href="styles.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+window.onload = function(){
+
+
+let nugget=true;
+let temp =true;
+let num_click = 1;
+$("#tryMe1").hide();
+$("#tryMe2").hide();
+$("#tryMe3").hide();
+$("#tryMe4").hide();
+var tryMe_1= document.getElementById("tryMe1");
+tryMe_1.loop = false;
+var tryMe_2= document.getElementById("tryMe2");
+tryMe_2.loop = false;
+var tryMe_3= document.getElementById("tryMe3");
+tryMe_3.loop = false;
+var tryMe_4= document.getElementById("tryMe4");
+tryMe_4.loop = false;
+var whispers_1= document.getElementById("whisper1");
+whispers_1.loop=true;
+var whispers_2= document.getElementById("whisper2");
+whispers_2.loop=true;
+var whispers_3= document.getElementById("whisper3");
+whispers_3.loop=true;
+var whispers_4= document.getElementById("whisper4");
+whispers_4.loop=true;
+
+// if(temp==true)
+// {
+//   whispers_1.play();
+// }
+
+
+
+function tryMe_play() {
+
+if(num_click==1){
+tryMe_1.play();
+whispers_1.pause();
+}
+if(num_click==2){
+tryMe_2.play();
+whispers_2.pause();
+}
+if(num_click==3){
+tryMe_3.play();
+whispers_3.pause();
+}
+if(num_click==4){
+tryMe_4.play();
+whispers_4.pause();
+}
+
+}
+
+
+
+tryMe_1.onended = function() {
+  $("#myCanvas").fadeTo(3000, 1);
+    nugget=true;
+  whispers_2.play();
+};
+
+tryMe_2.onended = function() {
+  $("#myCanvas").fadeTo(3000, 1);
+  nugget=true;
+  whispers_3.play();
+
+};
+tryMe_3.onended = function() {
+  $("#myCanvas").fadeTo(3000, 1);
+  nugget=true;
+  whispers_4.play();
+
+};
+
+// function circ_play(){
+//   tryMe_2.play();
+// }
+// get the canvas
+let canvas = document.getElementById("myCanvas");
+
+//get the context
+let context = canvas.getContext("2d");
+
+var offsetX = canvas.offsetLeft;
+var offsetY = canvas.offsetTop;
+
+// variables regarding the circle that the circleObject will move around
+let cntrRadius = 3;
+let cntrX =canvas.width/2;
+let cntrY = canvas.height/2;
+
+//declare an array of shapes
+let circShapeList = [];
+let circWidth =[canvas.width/2,canvas.width/3,1000,900,200];
+let circHeight =[canvas.height/2,canvas.width/4,400,700,500];
+//declare the number of shapes we want
+const NUM_CIRC_SHAPES=5;
+//fill the array with shapes
+// for(let i=0; i< NUM_CIRC_SHAPES;i++){
+let r = (Math.floor((Math.random() * 255) + 1));
+let g = (Math.floor((Math.random() * 255) + 1));
+let b = (Math.floor((Math.random() * 255) + 1));
+circShapeList.push(new CustomCircShape(circWidth[0],circHeight[0],(1*100)+10,255,125,0,1.0,0.05));
+circShapeList.push(new CustomCircShape(circWidth[1],circHeight[1],60,25,12,0,1.0,0.05));
+circShapeList.push(new CustomCircShape(circWidth[2],circHeight[2],60,255,125,0,1.0,0.05));
+circShapeList.push(new CustomCircShape(circWidth[3],circHeight[3],60,255,125,0,1.0,0.05));
+circShapeList.push(new CustomCircShape(circWidth[4],circHeight[4],60,255,125,0,1.0,0.05));
+
+document.getElementById("start").addEventListener("click", starting);
+
+function starting(){
+  whispers_1.loop = true;
+  whispers_1.play();
+};
+
+
+
+function handleEvent(e) {
+    var evt = e ? e : window.event;
+    var clickX = evt.clientX - offsetX;
+    var clickY = evt.clientY - offsetY;
+    var dx = canvas.width/2 - clickX;
+    var dy = canvas.height/2 - clickY;
+    if (dx * dx + dy * dy <= Math.PI*(r * r)) {
+        // alert("you are inside the circle");
+        tryMe_play();
+        $("#myCanvas").fadeTo(4000, 0.10);
+        nugget=false;
+        temp=false;
+        num_click++;
+    }
+
+    // return false;
+}
+
+
+requestAnimationFrame(run);
+
+function draw(){
+if(nugget==true){
+context.beginPath();
+context.arc(canvas.width/2, canvas.height/2, 50, 0, 2 * Math.PI);
+context.strokeStyle = "white";
+context.stroke();
+context.closePath();
+}
+}
+//our run method
+function run(){
+
+
+
+context.clearRect(0,0,canvas.width,canvas.height);
+// To draw the middle circle since he's different
+if(nugget==true){
+  circShapeList[0].display();
+  circShapeList[0].update1();
+}
+// Drawing all the other small circles
+  // for(let i=1; i< NUM_CIRC_SHAPES;i++){
+  //   circShapeList[i].display();
+  //   circShapeList[i].update();
+  // }
+draw();
+
+ canvas.addEventListener("click", handleEvent);
+
+//recursive call
+requestAnimationFrame(run);
+
+}
+
+//custom circle.
+function CustomCircShape(x,y,r,redC,greenC,blueC,alphaC,angSpeed){
+//member props
+this.x =x;
+this.y =y;
+this.r =r;
+this.redC = redC;
+this.greenC = greenC;
+this.blueC = blueC;
+this.alphaC = alphaC;
+this.angularSpeed = angSpeed;
+this.theta =0;
+
+
+//display
+this.display = function(){
+// this.col = "rgba("+this.redC+","+this.greenC+","+this.blueC+","+this.alphaC+")";
+this.strokeCol = "rgba("+255+","+255+","+255+","+(0.75)+")";
+
+
+if(nugget=true){
+context.beginPath();
+context.strokeStyle = this.strokeCol;
+context.lineWidth = 1;
+context.arc(this.x,this.y,this.r,0,2*Math.PI,true);
+//ALWAYS put fill() after the shape...
+// context.fill();
+context.stroke();
+context.closePath();
+
+
+// Display the text "try me"
+context.beginPath();
+context.font = "20px Arial";
+context.fillStyle = "white";
+context.textAlign = "center";
+context.fillText("Try me", canvas.width/2, canvas.height/2+8);
+context.closePath();
+}
+}
+this.update =function(){
+// this.x = Math.cos(this.theta)*cntrRadius + cntrX;
+// this.y = Math.sin(this.theta)*cntrRadius + cntrY;
+this.r = Math.sin(this.theta)*cntrRadius + cntrRadius+10;
+this.theta+=this.angularSpeed;
+}
+
+this.update1 =function(){
+// this.x = Math.cos(this.theta)*cntrRadius + cntrX;
+// this.y = Math.sin(this.theta)*cntrRadius + cntrY;
+this.r = Math.sin(this.theta)*cntrRadius + cntrRadius+60;
+this.theta+=this.angularSpeed;
+}
+
+
+}
+
+}
+
+
+
+
+    </script>
+    <style type="text/css">
+      canvas { border: 1px solid black; }
+    </style>
+  </head>
+  <!-- <body onload="draw();"> -->
+  <body>
+    <canvas id="myCanvas" width="1425" height="728"></canvas>
+    <button id="start"></button>
+<audio controls id="tryMe1">
+<source src="high1.mp3" type="audio/mpeg">
+</audio>
+<audio controls id="tryMe2">
+<source src="high2.mp3" type="audio/mpeg">
+</audio>
+<audio controls id="tryMe3">
+<source src="high3.mp3" type="audio/mpeg">
+</audio>
+<audio controls id="tryMe4">
+<source src="high4.mp3" type="audio/mpeg">
+</audio>
+<audio id="whisper1">
+<source src="whispers0.mp3" type="audio/mpeg">
+</audio>
+<audio id="whisper2">
+<source src="whispers1.mp3" type="audio/mpeg">
+</audio>
+<audio id="whisper3">
+<source src="whispers2.mp3" type="audio/mpeg">
+</audio>
+<audio id="whisper4">
+<source src="whispers3.mp3" type="audio/mpeg">
+</audio>
+  </body>
+</html>
