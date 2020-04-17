@@ -48,18 +48,22 @@ function tryMe_play() {
 if(num_click==1){
 tryMe_1.play();
 whispers_1.pause();
+
 }
 if(num_click==2){
 tryMe_2.play();
 whispers_2.pause();
+
 }
 if(num_click==3){
 tryMe_3.play();
 whispers_3.pause();
+
 }
 if(num_click==4){
 tryMe_4.play();
 whispers_4.pause();
+
 }
 
 }
@@ -70,18 +74,21 @@ tryMe_1.onended = function() {
   $("#myCanvas").fadeTo(3000, 1);
     nugget=true;
   whispers_2.play();
+  // canvas.addEventListener("click", handleEvent);
 };
 
 tryMe_2.onended = function() {
   $("#myCanvas").fadeTo(3000, 1);
   nugget=true;
   whispers_3.play();
+  // canvas.addEventListener("click", handleEvent);
 
 };
 tryMe_3.onended = function() {
   $("#myCanvas").fadeTo(3000, 1);
   nugget=true;
   whispers_4.play();
+  // canvas.addEventListener("click", handleEvent);
 
 };
 tryMe_4.onended = function() {
@@ -126,7 +133,7 @@ circShapeList.push(new CustomCircShape(circWidth[4],circHeight[4],60,255,125,0,1
 document.getElementById("start").addEventListener("click", starting);
 
 function starting(){
-  $('#myCanvas').css("background-image", "url(/bg.png)");
+  $('#myCanvas').css("background-image", "url(bg.png)");
   nugget=true;
   $("#butt").hide();
   whispers_1.loop = true;
@@ -145,8 +152,8 @@ function handleEvent(e) {
 
         tryMe_play();
         $("#myCanvas").fadeTo(4000, 0.10);
-
         nugget=false;
+        canvas.removeEventListener("click", handleEvent);
         temp=false;
         num_click++;
     }
@@ -179,6 +186,7 @@ context.clearRect(0,0,canvas.width,canvas.height);
 if(nugget==true){
   circShapeList[0].display();
   circShapeList[0].update1();
+  canvas.addEventListener("click", handleEvent);
 }
 // Drawing all the other small circles
   // for(let i=1; i< NUM_CIRC_SHAPES;i++){
@@ -187,7 +195,8 @@ if(nugget==true){
   // }
 draw();
 
- canvas.addEventListener("click", handleEvent);
+
+
 
 //recursive call
 requestAnimationFrame(run);
